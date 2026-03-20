@@ -1,6 +1,6 @@
 # ⚙️ Camunda Batch Monitor 📡
 
-<div align="center">
+<div align="auto">
   <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/Camunda-REST%20API-orange.svg" alt="Camunda 7 REST API">
   <img src="https://img.shields.io/badge/Google%20Chat-Webhook-green.svg" alt="Google Chat Webhook">
