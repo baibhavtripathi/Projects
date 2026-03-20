@@ -85,6 +85,9 @@ python -m camunda_monitor --config "path/to/your.env"
 - **Variable Tracking:** Automatically extracts variables defined in `TRACKED_VARIABLES` and pushes them to Google Chat.
 - **Automated Logging:** Telemetry is written to the `logs/` directory, automatically generating a new log file every day (midnight rotation).
 
+## ⛷️ [Onboarding](https://baibhavtripathi.github.io/Projects/camunda-batch-monitor/ONBOARDING.html)
+
+
 ### How It Works
 
 1. Loads configuration from the specified `.env` file
