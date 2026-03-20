@@ -60,36 +60,60 @@ camunda-batch-monitor/
     └── __init__.py
 ```
 
-## Prerequisites
+---
 
-- Python 3.8+
+## ⚙️ How It Works
+
+```mermaid
+graph TD;
+    A[Cron/Scheduler triggers Monitor] --> B{Load .env Config};
+    B --> C[Query Camunda REST API];
+    C --> D{Are there Active Instances?};
+    D -- Yes --> E[Check for Incidents];
+    E -- Active Incidents found --> F[Format 🚨 Incident Card];
+    E -- No Incidents --> G[Format 📊 Running Card];
+    D -- No --> H[Format ✅ Completed Card];
+    F --> I[Send Payload to Google Chat Space];
+    G --> I;
+    H --> I;
+    I --> J[Team alerted immediately!];
+```
+
+1. **Initialize**: Loads configuration from your secure `.env` file.
+2. **Scan**: Queries designated processes for active instances via the Camunda 7 REST API.
+3. **Analyze**: Evaluates the health of active processes, explicitly checking for incidents or failures.
+4. **Notify**: Dispatches a categorized Google Chat card:
+   - 📊 **Running** — Process name, instance count, timestamp.
+   - 🚨 **Incident** — Deep-dive error type and message details.
+   - ✅ **Completed** — End-of-day summary confirming batch completion.
+   - ❌ **Script Error** — Health check for the monitor itself.
+
+---
+
+## 🚀 Setup & Installation
+
+### Prerequisites
+
+- **Python 3.8+**
 - Network access to your Camunda 7 engine (`/engine-rest/`)
 - A Google Chat Space webhook URL
 
-## Setup
+### Installation Steps
 
-1. **Clone / copy this project**
+1. **Clone the repository**
 
 2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-
-   >💡 **Note on Dependencies**<br>
-   > `requirements.txt` uses minimum versions (`>=`) not pinned versions (`==`).
-   > A compromised upstream update could be pulled in unintentionally.
-   > Use `pip-compile` to freeze exact versions for production.
+   > 💡 **Pro Tip**: `requirements.txt` uses minimum versions. For production stability, use `pip-compile` to freeze exact versions!
 
 3. **Configure your environment:**
-
-   Copy the example config and fill in your values:
+   Copy the example config and inject your magic:
    ```bash
    cp config/.env.example config/.env
    ```
-
-   Or point to an existing `.env` file at runtime (see Usage below).
-
-   Required keys:
+   *Required Variables:*
    | Key | Description |
    |-----|-------------|
    | `CAMUNDA_URL` | Base URL of your Camunda instance (e.g. `https://host:8443/camunda`) |
@@ -97,46 +121,37 @@ camunda-batch-monitor/
    | `CAMUNDA_PASSWORD` | REST API password |
    | `GOOGLE_CHAT_WEBHOOK` | Google Chat Space webhook URL |
    | `PROCESS_KEYS` | Comma-separated list of process definition keys to monitor (e.g., `BatchProcess,LmdBatchProcess`) |
-   | `TRACKED_VARIABLES` | Comma-separated list of process variables to extract and include in notifications (e.g., `processKey,CCAT,jobId`) |
+   | `TRACKED_VARIABLES` | Comma-separated list of process variables to include in notifications (e.g., `processKey,jobId`) |
 
-## Usage
+---
+
+## 💻 Usage
+
+Run it manually or hook it up to a cron job:
 
 ```bash
-# Using the default config path (config/.env in this project)
+# Using the default config path
 python -m camunda_monitor
 
-# Using a custom config file
-python -m camunda_monitor --config "path/to/your.env"
+# Overriding with a custom config file
+python -m camunda_monitor --config "/path/to/production.env"
 ```
 
-## 🛠 Features
+---
 
-- **Multi-Process Support:** Dynamically scans processes defined in `PROCESS_KEYS`.
-- **Variable Tracking:** Automatically extracts variables defined in `TRACKED_VARIABLES` and pushes them to Google Chat.
-- **Automated Logging:** Telemetry is written to the `logs/` directory, automatically generating a new log file every day (midnight rotation).
+## ⛷️ [Interactive Onboarding Guide](https://baibhavtripathi.github.io/Projects/camunda-batch-monitor/ONBOARDING.html)
 
-## ⛷️ [Onboarding](https://baibhavtripathi.github.io/Projects/camunda-batch-monitor/ONBOARDING.html)
+Check out the onboarding page for a deep dive into advanced usage!
 
-
-### How It Works
-
-1. Loads configuration from the specified `.env` file
-2. Queries `BatchProcess` for active instances via the Camunda 7 REST API
-3. If no active instances, falls back to checking `LmdBatchProcess`
-4. Checks for incidents on any active process instance found
-5. Sends a formatted Google Chat card with the result:
-   - 📊 **Running** — process name, instance count, timestamp
-   - 🚨 **Incident** — error type and message details
-   - ✅ **Completed** — both batch processes have finished
-   - ❌ **Script Error** — failure details if the monitor itself errors
+---
 
 ## 📜 License & Disclaimer
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ### 📌 Open Source Attribution
-If you  use or share this software, please give proper credit to the original developer **[@baibhavtripathi](https://github.com/baibhavtripathi)**. 
+Crafted with ❤️. If you use or modify this software, please give proper credit to **[@baibhavtripathi](https://github.com/baibhavtripathi)**. 
 
 ### ⚠️ Liability Waiver
 **THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.** 
-By using this software, you acknowledge that the authors or copyright holders shall **not be liable** for any claims, damages (including direct, indirect, incidental, or consequential damages), or other liabilities arising from your use, deployment, or modification of this software. You are solely responsible for compliance with any organizational security policies and operational limits when integrating with Camunda 7 REST APIs or Google Chat Webhooks.
+By using this software, you acknowledge that the authors or copyright holders shall **not be liable** for any claims, damages (including direct, indirect, incidental, or consequential damages), or other liabilities arising from your use, deployment, or modification of this software. You are solely responsible for compliance with any organizational security policies when integrating with Camunda 7 REST APIs or Google Chat Webhooks.
