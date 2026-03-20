@@ -1,6 +1,6 @@
 # Camunda Batch Monitor: Onboarding & Architecture Guide
 
-Welcome to the Maintenance team! This guide is designed to help you understand the architecture, design decisions, and core technologies behind the **Camunda Batch Monitor**. 
+This guide is designed to help you understand the architecture, design decisions, and core technologies behind the **Camunda Batch Monitor**. 
 
 This application serves as a great introduction to modern Python development best practices, API integrations, and secure application distribution.
 
