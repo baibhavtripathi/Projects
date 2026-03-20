@@ -1,9 +1,10 @@
 # Camunda Batch Monitor
 
-A lightweight Python application that monitors **BatchProcess** and **LmdBatchProcess** on a Camunda 7 platform via its REST API, detects active instances and incidents, and sends formatted status notifications to **Google Chat**.
+A lightweight Python application that monitors Camunda processes on a Camunda 7 platform via its REST API, detects active instances and incidents, and sends formatted status notifications to **Google Chat**.
 
 ## Features
 
+- **Processes to monitor** — List processes in your `.env` file using key `PROCESS_KEYS`
 - **REST API-based monitoring** — No browser/Selenium required; queries Camunda 7 `/engine-rest/` endpoints directly
 - **Incident detection** — Checks for active incidents on running process instances and includes details in alerts
 - **Google Chat notifications** — Sends rich Card v2 messages to a Google Chat Space via webhook
@@ -101,7 +102,7 @@ python -m camunda_monitor --config "path/to/your.env"
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ### 📌 Open Source Attribution
-If you  use or share this software, please give proper credit to the original developer by attributing GitHub user **[@baibhavtripathi](https://github.com/baibhavtripathi)**. 
+If you  use or share this software, please give proper credit to the original developer **[@baibhavtripathi](https://github.com/baibhavtripathi)**. 
 
 ### ⚠️ Liability Waiver
 **THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.** 
