@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "camunda-batch-monitor"
+version = "1.0.0"
+description = "Monitors Camunda 7 batch processes and sends Google Chat alerts"
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.scripts]
+camunda-monitor = "camunda_monitor.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

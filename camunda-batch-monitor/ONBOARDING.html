@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camunda Batch Monitor - Onboarding</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Code Highlighting Theme (Dracula) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/dracula.min.css">
+    
+    <!-- Tailwind CSS (via CDN for standalone elegance) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <!-- Marked.js (for Markdown parsing) & Highlight.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0; /* Slate 200 */
+            background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.1), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.1), transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        /* Custom Typography Overrides */
+        .prose {
+            max-width: 85ch !important;
+        }
+        .prose h1, .prose h2, .prose h3 {
+            color: #f8fafc !important; /* Slate 50 */
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        .prose h1 {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        .prose h2 {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+        }
+        .prose p, .prose li {
+            color: #cbd5e1; /* Slate 300 */
+            line-height: 1.75;
+        }
+        .prose a {
+            color: #38bdf8 !important;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(56, 189, 248, 0.5);
+            transition: all 0.2s ease;
+        }
+        .prose a:hover {
+            color: #7dd3fc !important;
+            border-bottom-style: solid;
+        }
+        .prose strong {
+            color: #f8fafc;
+            font-weight: 600;
+        }
+        .prose code {
+            color: #fb7185; /* Rose 400 */
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+        }
+        .prose pre {
+            background: #1e1e3f !important; /* Deep code background */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        .prose hr {
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 3rem 0;
+        }
+        
+        /* Subtle animation on load */
+        #content-wrapper {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Sticky Navigation Header -->
+    <header class="py-4 shadow-lg">
+        <div class="container mx-auto px-6 max-w-4xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg class="w-8 h-8 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                </svg>
+                <div class="font-bold text-xl tracking-tight text-slate-100">Camunda Automation Platform</div>
+            </div>
+            <div class="text-sm font-medium text-slate-400">
+                Engineering Onboarding
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
+        <div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-8 md:p-12 shadow-2xl backdrop-blur-sm" id="content-wrapper">
+            <!-- Rendered Markdown goes here -->
+            <article id="content" class="prose prose-invert prose-lg"></article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-slate-500 text-sm">
+        <p>Built for the Camunda Maintenance Team • Internal Use Only</p>
+    </footer>
+
+    <!-- Hidden Raw Markdown -->
+    <script type="text/markdown" id="markdown-source">
+# Camunda Batch Monitor: Onboarding & Architecture Guide
+
+Welcome to the Maintenance team! This guide is designed to help you understand the architecture, design decisions, and core technologies behind the **Camunda Batch Monitor**. 
+
+This application serves as a great introduction to modern Python development best practices, API integrations, and secure application distribution.
+
+---
+
+## 1. Project Background and Purpose
+
+### The Problem
+Previously, monitoring our Camunda batch processes (`BatchProcess` and `LmdBatchProcess`) was done using a **Selenium-based automation script**. That script launched a visible Chrome browser, physically "clicked" through the web UI, took screenshots, and used an internal Microsoft Outlook client (`win32com`) to send emails. 
+
+**Drawbacks of the old approach:**
+- **Fragile:** Any minor change to the Camunda Web UI would break the script.
+- **Slow & Invasive:** Booting a browser is resource-intensive and disruptive.
+- **Incompatible:** Cannot easily be run headless on an isolated server without browser environments or Outlook installed.
+- **Security:** Credentials and file paths were hardcoded directly in the Python files.
+
+### The Solution (This Application)
+We refactored the project into an **API-first, container-ready Python application**.
+- **Camunda 7 REST API:** We query the engine directly via HTTP. It's lightning fast and immune to UI changes.
+- **Google Chat Webhooks:** Alerts go directly to team chat channels, eliminating the need for email servers or local Outlook clients.
+- **Config-Driven:** Uses `.env` files to isolate secrets and define logic (e.g. `PROCESS_KEYS` and `TRACKED_VARIABLES`).
+- **Telemetry & Logging:** Stores rotating daily log files inside `/logs/` to provide a complete audit trail without cluttering the main directory.
+- **Packaged Executables:** Built using PyInstaller so it can run anywhere without installing Python.
+
+---
+
+## 2. Project Architecture
+
+The application is structured as a standard modular Python package:
+
+```text
+camunda-batch-monitor/
+├── pyproject.toml              # Makes the application pip-installable
+├── requirements.txt            # Python dependencies (requests, python-dotenv, pytest)
+├── camunda-monitor.spec        # PyInstaller build instructions
+├── config/
+│   └── .env.example            # Boilerplate config to show what parameters are needed
+├── src/camunda_monitor/        # Main application package
+│   ├── api.py                  # Handles all Camunda HTTP REST requests
+│   ├── config.py               # Validates and loads the .env configuration
+│   ├── notifier.py             # Formats and sends Google Chat Card v2 payloads
+│   └── __main__.py             # Entry point (links config → api → notifier)
+└── tests/                      # Unit testing suite (pytest)
+```
+
+### The Execution Flow
+1. **Load Config:** User runs `camunda-monitor.exe --config "path.env"`. `config.py` loads and validates the file.
+2. **Query API:** `api.py` checks for active instances of `BatchProcess`.
+3. **Fallback:** If none are found, it queries `LmdBatchProcess`.
+4. **Check Incidents:** If an active instance is found, it queries the `/incident` REST endpoint for errors.
+5. **Notify:** `notifier.py` builds an interactive Google Chat card summarizing the health and pushes it via the webhook.
+
+---
+
+## 3. Core Technologies & Technical Concepts
+
+### A. Environment Variables and Secret Management
+**Concept:** Hardcoding credentials (`user="admin"`) is a security risk. Best practice is loading configurations from the environment.
+**Implementation:** We use the `python-dotenv` library. Specifically, instead of injecting variables into the global `os.environ` space, we use `dotenv_values()` to tightly scope the configurations to a Python dictionary mapping within `config.py`.
+**Resource:** [Python Dotenv documentation](https://pypi.org/project/python-dotenv/)
+
+### B. REST API Integration (`requests`)
+**Concept:** REpresentational State Transfer (REST) is the standard for interacting with modern web servers.
+**Implementation:** `api.py` uses the standard Python `requests` library. We use **HTTP Basic Auth** (`auth=(user, password)`) which is standard for Camunda 7 self-managed deployments. We also gracefully handle self-signed certificates common in internal enterprise servers by appending `verify=False`. 
+**Resources:**
+- [Python Requests Library Guide](https://realpython.com/python-requests/)
+- [Camunda 7 REST API Reference](https://docs.camunda.org/manual/7.20/reference/rest/)
+
+### C. Webhooks and ChatOps
+**Concept:** A Webhook is a way for an app to provide other applications with real-time information by sending an HTTP POST request to a provided URL.
+**Implementation:** `notifier.py` sends `POST` requests to a Google Chat Webhook URL. Authentication is uniquely baked directly into the URL itself. We formulate the payload using Google Chat's "Card v2" format to create rich, widget-based messages.
+**Resources:**
+- [What is a Webhook?](https://sendgrid.com/blog/whats-webhook/)
+- [Google Chat API: Message Formats & Cards](https://developers.google.com/workspace/chat/format-messages)
+
+### D. Unit Testing and Mocking (`pytest`)
+**Concept:** Writing automated tests ensures that when you alter the logic next year, you don't break existing functionality. 
+**Implementation:** We use `pytest`. Because our application calls external servers (Camunda and Google Chat), we use **Mocking** (via Python's `unittest.mock.patch`). This allows us to "fake" the HTTP responses so the tests run in milliseconds without requiring actual network access.
+**Resources:**
+- [Getting Started with Pytest](https://docs.pytest.org/en/7.4.x/getting-started.html)
+- [Understanding Python Mocking](https://realpython.com/python-mock-library/)
+
+### E. Distribution via Application Freezing (`PyInstaller`)
+**Concept:** Standard Python scripts require the target server to install Python and configure dependency packages (`pip install`). "Freezing" bundles the Python interpreter and all application code into one single `executable`.
+**Implementation:** We use `PyInstaller` with a customized `camunda-monitor.spec` file. The output `dist/camunda-monitor.exe` can be securely transferred to any Windows server and executed via Task Scheduler effortlessly.
+**Resource:** [PyInstaller Documentation](https://pyinstaller.org/en/stable/operating-mode.html)
+
+---
+
+## 4. Maintenance Guide for Newcomers
+
+As you onboard to manage this infrastructure, here are practical workflows to follow:
+
+### Developing and Testing Locally
+1. Ensure your Python virtual environment has the dev requirements:
+   \`\`\`bash
+   pip install -e .
+   pip install -r requirements.txt
+   \`\`\`
+2. Any time you alter logic in `src/`, verify you haven't broken anything by running the test suite:
+   \`\`\`bash
+   python -m pytest tests/ -v
+   \`\`\`
+
+### Releasing an Update
+Whenever modifying business requirements, you must rebuild the executable:
+\`\`\`bash
+python -m PyInstaller camunda-monitor.spec --distpath dist --workpath build --noconfirm
+\`\`\`
+Take the newly generated `dist/camunda-monitor.exe` file, pair it with the target environment's `.env` configuration file, and deploy it to the server.
+
+### Extending the Application
+Future enhancements might include:
+- Adding email fallbacks if the Chat Webhook fails.
+- Upgrading to OAuth tokens if transitioning from Camunda 7 to Camunda 8 (using the Operate API).
+- Tracking variable payloads attached to specific failed incidents.
+    </script>
+
+    <!-- Rendering Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Un-escape the markdown code blocks that had backticks escaped for the HTML parser
+            let rawMarkdown = document.getElementById('markdown-source').textContent;
+            rawMarkdown = rawMarkdown.replace(/\\`\\`\\`/g, '```');
+            
+            // Parse Markdown to HTML
+            document.getElementById('content').innerHTML = marked.parse(rawMarkdown);
+            
+            // Apply Syntax Highlighting to code blocks
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</body>
+</html>
