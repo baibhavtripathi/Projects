@@ -22,9 +22,11 @@ Before this automation, monitoring teams had to manually log into production ser
 
 Instead of actively watching dashboards, the team receives real-time, actionable alerts straight in their communication channels. 
 
-<div align="center">
-  <img src="https://quickchart.io/chart?c={type:'doughnut',data:{labels:['Time Saved (Automated)','Manual Review'],datasets:[{data:[60,5],backgroundColor:['%2300C49F','%23FF8042']}]},options:{plugins:{title:{display:true,text:'Daily Monitoring Time (Minutes)'}},cutoutPercentage:70}}" width="400" alt="Time Saved Chart">
-</div>
+```mermaid
+pie title Daily Monitoring Time (Minutes)
+    "Time Saved (Automated)" : 60
+    "Manual Review" : 5
+```
 
 ---
 
