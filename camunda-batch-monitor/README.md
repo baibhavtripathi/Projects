@@ -1,11 +1,10 @@
 # ⚙️ Camunda Batch Monitor 📡
 
-<div align="auto">
+<div align="center">
   <img src="https://img.shields.io/badge/Python-3.8+-blue.svg" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/Camunda-REST%20API-orange.svg" alt="Camunda 7 REST API">
   <img src="https://img.shields.io/badge/Google%20Chat-Webhook-green.svg" alt="Google Chat Webhook">
   <img src="https://img.shields.io/badge/Status-Active-success" alt="Status Active">
-  <br/>
   <img src="https://visitor-badge.laobi.icu/badge?page_id=baibhavtripathi.camunda-batch-monitor" alt="Project Views"/>
 </div>
 
